@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 import 'calculator_button.dart';
 import 'calculator_logic.dart';
+import 'gesture_button.dart';
 
 class CalculatorView extends StatefulWidget {
   @override
@@ -13,6 +14,8 @@ class CalculatorView extends StatefulWidget {
 class _CalculatorViewState extends State<CalculatorView> {
   String _resultCalc = "0.0";
   String _helpedText = "";
+  Calculator calculator = new Calculator();
+
   void addNumberToResult(String number) {
     setState(() {
       if (_resultCalc == "0.0" || _resultCalc == "0") {
@@ -36,14 +39,13 @@ class _CalculatorViewState extends State<CalculatorView> {
             _resultCalc[_resultCalc.length - 1] != "x" &&
             _resultCalc[_resultCalc.length - 1] != "-" &&
             _resultCalc[_resultCalc.length - 1] != "+") {
-          _helpedText = _resultCalc + op;
+          _helpedText = calculator.calc(_helpedText + _resultCalc) + op;
           _resultCalc = "0.0";
         }
       }
     });
   }
 
-  Calculator calculator = new Calculator();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -112,12 +114,10 @@ class _CalculatorViewState extends State<CalculatorView> {
                       text: "DEL",
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => addOperation("÷"),
-                    child: CalculatorButton(
-                      text: "÷",
-                      textColor: Colors.orange,
-                    ),
+                  GestureButton(
+                    buttonText: "÷",
+                    buttonFunction: addOperation,
+                    buttonTextColor: Colors.orange,
                   ),
                 ],
               ),
@@ -127,30 +127,22 @@ class _CalculatorViewState extends State<CalculatorView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () => addNumberToResult("7"),
-                    child: CalculatorButton(
-                      text: "7",
-                    ),
+                  GestureButton(
+                    buttonText: "7",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addNumberToResult("8"),
-                    child: CalculatorButton(
-                      text: "8",
-                    ),
+                  GestureButton(
+                    buttonText: "8",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addNumberToResult("9"),
-                    child: CalculatorButton(
-                      text: "9",
-                    ),
+                  GestureButton(
+                    buttonText: "9",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addOperation("x"),
-                    child: CalculatorButton(
-                      text: "x",
-                      textColor: Colors.orange,
-                    ),
+                  GestureButton(
+                    buttonText: "x",
+                    buttonFunction: addOperation,
+                    buttonTextColor: Colors.orange,
                   ),
                 ],
               ),
@@ -160,31 +152,23 @@ class _CalculatorViewState extends State<CalculatorView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () => addNumberToResult("4"),
-                    child: CalculatorButton(
-                      text: "4",
-                    ),
+                  GestureButton(
+                    buttonText: "4",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addNumberToResult("5"),
-                    child: CalculatorButton(
-                      text: "5",
-                    ),
+                  GestureButton(
+                    buttonText: "5",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addNumberToResult("6"),
-                    child: CalculatorButton(
-                      text: "6",
-                    ),
+                  GestureButton(
+                    buttonText: "6",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addOperation("-"),
-                    child: CalculatorButton(
-                      text: "-",
-                      textColor: Colors.orange,
-                      textSize: 45,
-                    ),
+                  GestureButton(
+                    buttonText: "-",
+                    buttonTextColor: Colors.orange,
+                    buttonTextSize: 45,
+                    buttonFunction: addOperation,
                   ),
                 ],
               ),
@@ -194,31 +178,23 @@ class _CalculatorViewState extends State<CalculatorView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () => addNumberToResult("1"),
-                    child: CalculatorButton(
-                      text: "1",
-                    ),
+                  GestureButton(
+                    buttonText: "1",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addNumberToResult("2"),
-                    child: CalculatorButton(
-                      text: "2",
-                    ),
+                  GestureButton(
+                    buttonText: "2",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addNumberToResult("3"),
-                    child: CalculatorButton(
-                      text: "3",
-                    ),
+                  GestureButton(
+                    buttonText: "3",
+                    buttonFunction: addNumberToResult,
                   ),
-                  GestureDetector(
-                    onTap: () => addOperation("+"),
-                    child: CalculatorButton(
-                      text: "+",
-                      textColor: Colors.orange,
-                      textSize: 45,
-                    ),
+                  GestureButton(
+                    buttonText: "+",
+                    buttonFunction: addOperation,
+                    buttonTextColor: Colors.orange,
+                    buttonTextSize: 45,
                   ),
                 ],
               ),
@@ -228,18 +204,14 @@ class _CalculatorViewState extends State<CalculatorView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () => addNumberToResult("0"),
-                    child: CalculatorButton(
-                      text: "0",
-                      isPill: true,
-                    ),
+                  GestureButton(
+                    buttonText: "0",
+                    buttonFunction: addNumberToResult,
+                    buttonIsPill: true,
                   ),
-                  GestureDetector(
-                    onTap: () => addOperation("."),
-                    child: CalculatorButton(
-                      text: ".",
-                    ),
+                  GestureButton(
+                    buttonText: ".",
+                    buttonFunction: addOperation,
                   ),
                   GestureDetector(
                     onTap: () {
