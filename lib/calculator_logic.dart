@@ -1,10 +1,6 @@
 import 'package:math_expressions/math_expressions.dart';
 
 class Calculator {
-  String funcAC() {
-    return "0.0";
-  }
-
   String calc(String exp) {
     try {
       Parser p = Parser();
