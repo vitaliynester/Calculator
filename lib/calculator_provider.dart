@@ -17,6 +17,11 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   void addNumber(String number) {
+    try {
+      double.parse(number);
+    } catch (e) {
+      return;
+    }
     _resultCalcultation =
         _resultCalcultation == "0.0" || _resultCalcultation == "0"
             ? number
@@ -25,6 +30,10 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   void addOperation(String operation) {
+    try {
+      double.parse(operation);
+      return;
+    } catch (e) {}
     if (operation == ".") {
       if (_resultCalcultation.contains(".")) {
         return;
@@ -46,6 +55,7 @@ class CalculatorProvider extends ChangeNotifier {
 
   void funcAC() {
     _resultCalcultation = _logic.ac();
+    _helpedText = '';
     notifyListeners();
   }
 
@@ -61,6 +71,9 @@ class CalculatorProvider extends ChangeNotifier {
 
   void funcEquals() {
     _resultCalcultation = _logic.calc(_helpedText + _resultCalcultation);
+    if (_resultCalcultation == 'Infinity') {
+      _resultCalcultation = '0.0';
+    }
     _helpedText = "";
     notifyListeners();
   }
